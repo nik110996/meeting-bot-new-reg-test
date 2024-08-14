@@ -8,7 +8,7 @@ public class UserModel {
     private String profileLink;
     private String job;
     private String hobbie;
-    private Short age;
+    private Short yearsOfExperience;
 
     public UserModel(long id, String userName) {
         this.id = id;
@@ -17,17 +17,17 @@ public class UserModel {
         this.profileLink = "";
         this.job = "";
         this.hobbie = "";
-        this.age = 0;
+        this.yearsOfExperience = 0;
     }
 
-    public UserModel(long id, String userName, String fullName, String profileLink, String job, String hobbie, int age) {
+    public UserModel(long id, String userName, String fullName, String profileLink, String job, String hobbie, int yearsOfExperience) {
         this.id = id;
         this.userName = userName;
         this.fullName = fullName;
         this.profileLink = profileLink;
         this.job = job;
         this.hobbie = hobbie;
-        this.age = (short) age;
+        this.yearsOfExperience = (short) yearsOfExperience;
     }
 
     public long getId() {
@@ -78,12 +78,12 @@ public class UserModel {
         this.hobbie = hobbie;
     }
 
-    public Short getAge() {
-        return age;
+    public Short getYearsOfExperience() {
+        return yearsOfExperience;
     }
 
-    public void setAge(Short age) {
-        this.age = age;
+    public void setYearsOfExperience(Short yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class UserModel {
                 ", profileLink='" + profileLink + '\'' +
                 ", job='" + job + '\'' +
                 ", hobbie='" + hobbie + '\'' +
-                ", age=" + age +
+                ", yearsOfExperience=" + yearsOfExperience +
                 '}';
     }
 }

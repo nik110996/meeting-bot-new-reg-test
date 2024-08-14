@@ -10,13 +10,13 @@ import ru.meetingbot.db.dao.UserDAO;
 import ru.meetingbot.db.model.UserModel;
 import ru.meetingbot.util.StringMarkdownV2;
 
-public class WriteAgeState extends BaseChatState {
+public class WriteYearsOfExperienceState extends BaseChatState {
 
     private void congratulation(UserModel userModel) {
-        String beforeUsername = ResBundle.getMessage("writeAge.beforeUsername");
-        String afterUsername = ResBundle.getMessage("writeAge.afterUsername");
-        String congratulation = ResBundle.getMessage("writeAge.congratulation");
-        String congratulationTwo = ResBundle.getMessage("writeAge.congratulation2");
+        String beforeUsername = ResBundle.getMessage("writeYearsOfExperience.beforeUsername");
+        String afterUsername = ResBundle.getMessage("writeYearsOfExperience.afterUsername");
+        String congratulation = ResBundle.getMessage("writeYearsOfExperience.congratulation");
+        String congratulationTwo = ResBundle.getMessage("writeYearsOfExperience.congratulation2");
 
         String username = StringMarkdownV2.getString(userModel.getUserName());
         String fullName = StringMarkdownV2.getString(userModel.getFullName());
@@ -24,23 +24,23 @@ public class WriteAgeState extends BaseChatState {
         String instagram = "[" + profileLink + "]" + "(https://www.instagram.com/" + profileLink + "/)";
         String job = StringMarkdownV2.getString(userModel.getJob());
         String hobbie = StringMarkdownV2.getString(userModel.getHobbie());
-        Short age = userModel.getAge();
+        Short age = userModel.getYearsOfExperience();
 
-        String separator = ResBundle.getMessage("writeAgeState.congratulation.separator");
+        String separator = ResBundle.getMessage("writeYearsOfExperienceState.congratulation.separator");
         String text = new StringBuilder()
                 .append(beforeUsername).append(username).append(afterUsername)
                 .append(congratulation)
-                .append(ResBundle.getMessage("writeAgeState.congratulation.name")).append(separator).append(fullName).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.job")).append(separator).append(job).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.age")).append(separator).append(age).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.name")).append(separator).append(fullName).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.job")).append(separator).append(job).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.yearsOfExperienceState.congratulation")).append(separator).append(age).append("\n")
                 .append(congratulationTwo).toString();
 
         Message response = ChatWork.sendMessage(chat.getUserId(), text, ParseMode.MARKDOWNV2);
         chat.setBotMessageId(response.getMessageId());
 
-        String congratulationThree = ResBundle.getMessage("writeAge.congratulation3");
+        String congratulationThree = ResBundle.getMessage("writeYearsOfExperience.congratulation3");
 
         Message next = ChatWork.sendMessage(chat.getUserId(), congratulationThree, ParseMode.MARKDOWNV2);
         chat.setBotMessageId(next.getMessageId());
@@ -48,7 +48,7 @@ public class WriteAgeState extends BaseChatState {
 
     @Override
     public void onStart() {
-        String text = ResBundle.getMessage("writeAge.text");
+        String text = ResBundle.getMessage("writeYearsOfExperience.text");
 
         Message response = ChatWork.sendMessage(chat.getUserId(), text, ParseMode.MARKDOWNV2);
         chat.setBotMessageId(response.getMessageId());
@@ -68,7 +68,7 @@ public class WriteAgeState extends BaseChatState {
             UserDAO userDAO = new UserDAO();
             UserModel userModel = userDAO.get(chat.getUserId()).get();
 
-            userModel.setAge(age);
+            userModel.setYearsOfExperience(age);
             userDAO.update(userModel);
 
             congratulation(userModel);
@@ -76,7 +76,7 @@ public class WriteAgeState extends BaseChatState {
             ChatWork.changeChatState(chat, ChatState.MAIN);
 
         } else {
-            Message response = ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("writeAgeState.congratulation.incorrect"), ParseMode.MARKDOWNV2);
+            Message response = ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("writeYearsOfExperienceState.congratulation.incorrect"), ParseMode.MARKDOWNV2);
             chat.setBotMessageId(response.getMessageId());
 
             onStart();

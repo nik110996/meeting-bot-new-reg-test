@@ -34,17 +34,17 @@ public class Monday {
         String instagram = "[" + profileLink + "]" + "(https://www.instagram.com/" + profileLink + "/)";
         String job = StringMarkdownV2.getString(userModel.getJob());
         String hobbie = StringMarkdownV2.getString(userModel.getHobbie());
-        Short age = userModel.getAge();
+        Short age = userModel.getYearsOfExperience();
 
         String reachOut = "__[Telegram]" + "(https://t.me/" + userName + ")__";
 
-        String separator = ResBundle.getMessage("writeAgeState.congratulation.separator");
+        String separator = ResBundle.getMessage("writeYearsOfExperienceState.congratulation.separator");
         String text = new StringBuilder()
                 .append(ResBundle.getMessage("monday.beforeUsername")).append(userName).append(ResBundle.getMessage("monday.afterUsername"))
-                .append(ResBundle.getMessage("writeAgeState.congratulation.name")).append(separator).append(fullName).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.job")).append(separator).append(job).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.name")).append(separator).append(fullName).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.job")).append(separator).append(job).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
                 .append(ResBundle.getMessage("writeAgeState.congratulation.age")).append(separator).append(age).append("\n")
                 .append(ResBundle.getMessage("monday.beforeReachOut")).append(reachOut).append(ResBundle.getMessage("monday.afterReachOut"))
 

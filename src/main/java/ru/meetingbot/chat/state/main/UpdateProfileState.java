@@ -26,14 +26,14 @@ public class UpdateProfileState extends BaseChatState {
 //        boolean isEmptyProfileLink = userModel.getProfileLink().equals("");
 //        boolean isEmptyJob = userModel.getJob().equals("");
 //        boolean isEmptyHobbie = userModel.getHobbie().equals("");
-//        boolean isEmptyAge = (userModel.getAge() == 0);
+//        boolean isEmptyAge = (userModel.getYearsOfExperience() == 0);
 
         String separator = ResBundle.getMessage("updateProfileState.separator");
         String fullName = /*isEmptyFullName ? U_RED_CIRCLE + " Name" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.name") + separator + userModel.getFullName();
         String profileLink = /*isEmptyProfileLink ? U_YELLOW_CIRCLE + " Social Network" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.profileLink") + separator + userModel.getProfileLink();
         String job = /*isEmptyJob ? U_YELLOW_CIRCLE + " Job" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.job") + separator + userModel.getJob();
         String hobbie = /*isEmptyHobbie ? U_YELLOW_CIRCLE + " Hobbie" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.hobbie") + separator + userModel.getHobbie();
-        String age = /*isEmptyAge ? U_YELLOW_CIRCLE + " Age" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.age") + separator + userModel.getAge();
+        String age = /*isEmptyAge ? U_YELLOW_CIRCLE + " Age" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.age") + separator + userModel.getYearsOfExperience();
 
         var fullNameButton = ChatWork.getButton(fullName, C_UPDATE_FULL_NAME);
         var profileLinkButton = ChatWork.getButton(profileLink, C_UPDATE_PROFILE_LINK);

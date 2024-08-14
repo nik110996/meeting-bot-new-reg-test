@@ -5,7 +5,6 @@ import ru.meetingbot.db.connection.ConnectionFactory;
 import ru.meetingbot.db.model.UserModel;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -23,9 +22,9 @@ public class UserDAO extends Dao<UserModel> {
             String profileLink = resultSet.getString(T_USER_C_PROFILE_LINK);
             String job = resultSet.getString(T_USER_C_JOB);
             String hobbie = resultSet.getString(T_USER_C_HOBBIE);
-            short age = resultSet.getShort(T_USER_C_AGE);
+            short yearsOfExperience = resultSet.getShort(T_USER_C_YEARS_OF_EXPERIENCE);
 
-            UserModel userModel = new UserModel(id_user, userName, fullName, profileLink, job, hobbie, age);
+            UserModel userModel = new UserModel(id_user, userName, fullName, profileLink, job, hobbie, yearsOfExperience);
             return Optional.of(userModel);
     }
 
@@ -109,7 +108,7 @@ public class UserDAO extends Dao<UserModel> {
                     T_USER_C_PROFILE_LINK, userModel.getProfileLink(),
                     T_USER_C_JOB, userModel.getJob(),
                     T_USER_C_HOBBIE, userModel.getHobbie(),
-                    T_USER_C_AGE, userModel.getAge());
+                    T_USER_C_YEARS_OF_EXPERIENCE, userModel.getYearsOfExperience());
 
             if (affectedRows > 0) {
                 affectedRows = create(connection, T_CHAT,
@@ -143,7 +142,7 @@ public class UserDAO extends Dao<UserModel> {
                 T_USER_C_PROFILE_LINK, userModel.getProfileLink(),
                 T_USER_C_JOB, userModel.getJob(),
                 T_USER_C_HOBBIE, userModel.getHobbie(),
-                T_USER_C_AGE, userModel.getAge(),
+                T_USER_C_YEARS_OF_EXPERIENCE, userModel.getYearsOfExperience(),
                 T_USER_C_ID, userModel.getId());
     }
 

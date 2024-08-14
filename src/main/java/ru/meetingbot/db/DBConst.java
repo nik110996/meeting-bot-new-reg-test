@@ -14,7 +14,7 @@ public interface DBConst {
     String T_USER_C_PROFILE_LINK = "profile_link";
     String T_USER_C_JOB = "job";
     String T_USER_C_HOBBIE = "hobbie";
-    String T_USER_C_AGE = "age";
+    String T_USER_C_YEARS_OF_EXPERIENCE = "years_of_experience";
 
     String T_MEETING = "public.meeting";
     String T_MEETING_C_USER_ID = "user_id";
