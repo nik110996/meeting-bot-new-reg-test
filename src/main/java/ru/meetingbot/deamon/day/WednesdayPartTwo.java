@@ -16,6 +16,7 @@ import ru.meetingbot.deamon.algorithm.Algorithm;
 import ru.meetingbot.util.StringMarkdownV2;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,6 +116,11 @@ public class WednesdayPartTwo {
                 long userId = user.getUserId();
                 long partnerId = partner.getUserId();
 
+                /* проверка, что это не один и тот же пользователь */
+                if (userId == partnerId) {
+                    continue;
+                }
+
                 /* если уже найдена пара за этот цикл */
                 if (partner.getMeetingStateId() == MeetingState.W_HAVE_PARTNER.id()) {
                     continue;
@@ -125,9 +131,20 @@ public class WednesdayPartTwo {
                     continue;
                 }
 
-                /* проверка, что это не один и тот же пользователь */
+                // Если последняя встреча была менее двух месяцев назад, пропустить эту пару
+                Optional<FinalMeetingModel> lastMeeting = finalMeetingDAO.getLastMeetingBetweenUsers(partnerId, userId);
+                if (lastMeeting.isPresent()) {
+                    LocalDate lastMeetingDate = lastMeeting.get().getDate();
+                    LocalDate currentDate = LocalDate.now();
+
+                    long monthsBetween = ChronoUnit.MONTHS.between(lastMeetingDate, currentDate);
+                    if (monthsBetween < 2) {
+                        continue;
+                    }
+                }
+
                 /* И проверка, по алгоритму */
-                if (userId != partnerId && algorithm.isIt(partnerId, userId)) {
+                if (algorithm.isIt(partnerId, userId)) {
 
                     //удалить из партнёров, тех кому ищатся новые партнёры
                     List<MeetingModel> where = meetingDAO.getWhere(true, DBConst.T_MEETING_C_USER_MEETING_ID, userId);

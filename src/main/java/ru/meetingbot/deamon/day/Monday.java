@@ -187,14 +187,30 @@ public class Monday {
                 long userId = user.getUserId();
                 long partnerId = partner.getUserId();
 
+                /* проверка, что это не один и тот же пользователь */
+                if (userId == partnerId) {
+                    continue;
+                }
+
                 /* если уже найдена пара за этот цикл */
                 if (partner.getMeetingStateId() == MeetingState.M_HAVE_PARTNER.id()) {
                     continue;
                 }
 
-                /* проверка, что это не один и тот же пользователь */
+                // Если последняя встреча была менее двух месяцев назад, пропустить эту пару
+                Optional<FinalMeetingModel> lastMeeting = finalMeetingDAO.getLastMeetingBetweenUsers(partnerId, userId);
+                if (lastMeeting.isPresent()) {
+                    LocalDate lastMeetingDate = lastMeeting.get().getDate();
+                    LocalDate currentDate = LocalDate.now();
+
+                    long monthsBetween = ChronoUnit.MONTHS.between(lastMeetingDate, currentDate);
+                    if (monthsBetween < 2) {
+                        continue;
+                    }
+                }
+
                 /* И проверка, по алгоритму */
-                if (userId != partnerId && algorithm.isIt(partnerId, userId)) {
+                if (algorithm.isIt(partnerId, userId)) {
                     user.setUserMeetingId(partnerId);
                     user.setMeetingStateId(MeetingState.M_HAVE_PARTNER.id());
                     meetingDAO.update(user);
@@ -226,4 +242,5 @@ public class Monday {
 
         getPairs();
     }
+
 }
