@@ -1,13 +1,8 @@
 package ru.meetingbot.admin.executor;
 
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
-import org.telegram.telegrambots.meta.api.objects.User;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.meetingbot.admin.AdminCommand;
 import ru.meetingbot.chat.ChatWithState;
 import ru.meetingbot.chat.ChatWork;
 import ru.meetingbot.db.ChatState;
@@ -17,11 +12,9 @@ import ru.meetingbot.db.model.FinalMeetingModel;
 import ru.meetingbot.db.model.UserModel;
 import ru.meetingbot.db.model.UserStatusModel;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TelegramChatAdminCommandExecutor extends AdminExecutor {
@@ -41,7 +34,7 @@ public class TelegramChatAdminCommandExecutor extends AdminExecutor {
                 case WRITE_PROFILE_LINK:
                 case WRITE_JOB:
                 case WRITE_HOBBIE:
-                case WRITE_AGE:
+                case WRITE_YEARS_OF_EXPERIENCE:
                     remove = true;
             }
             return remove;

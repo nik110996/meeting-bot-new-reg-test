@@ -10,9 +10,34 @@ import ru.meetingbot.db.dao.UserDAO;
 import ru.meetingbot.db.model.UserModel;
 import ru.meetingbot.util.StringMarkdownV2;
 
-public class WriteYearsOfExperienceState extends BaseChatState {
+public class WriteLocationState extends BaseChatState {
 
-    /*private void congratulation(UserModel userModel) {
+    @Override
+    public void onStart() {
+        String text = ResBundle.getMessage("writeLocation.text");
+
+        Message response = ChatWork.sendMessage(chat.getUserId(), text, ParseMode.MARKDOWNV2);
+        chat.setBotMessageId(response.getMessageId());
+    }
+
+    @Override
+    public void writeMessage(String message) {
+        UserDAO userDAO = new UserDAO();
+        UserModel userModel = userDAO.get(chat.getUserId()).get();
+
+        userDAO.update(userModel);
+
+        congratulation(userModel);
+        ChatWork.changeChatState(chat, ChatState.MAIN);
+
+    }
+
+    @Override
+    public void callbackQuery(String data) {
+
+    }
+
+    private void congratulation(UserModel userModel) {
         String beforeUsername = ResBundle.getMessage("writeYearsOfExperience.beforeUsername");
         String afterUsername = ResBundle.getMessage("writeYearsOfExperience.afterUsername");
         String congratulation = ResBundle.getMessage("writeYearsOfExperience.congratulation");
@@ -45,47 +70,5 @@ public class WriteYearsOfExperienceState extends BaseChatState {
 
         Message next = ChatWork.sendMessage(chat.getUserId(), congratulationThree, ParseMode.MARKDOWNV2);
         chat.setBotMessageId(next.getMessageId());
-    }*/
-
-    @Override
-    public void onStart() {
-        String text = ResBundle.getMessage("writeYearsOfExperience.text");
-
-        Message response = ChatWork.sendMessage(chat.getUserId(), text, ParseMode.MARKDOWNV2);
-        chat.setBotMessageId(response.getMessageId());
-    }
-
-    @Override
-    public void writeMessage(String message) {
-        short age = 0;
-
-        try {
-            age = Short.parseShort(message);
-        } catch (NumberFormatException e) {
-            age = -1;
-        }
-
-        if (age > 0 && age < 200) {
-            UserDAO userDAO = new UserDAO();
-            UserModel userModel = userDAO.get(chat.getUserId()).get();
-
-            userModel.setYearsOfExperience(age);
-            userDAO.update(userModel);
-
-            //congratulation(userModel);
-
-            ChatWork.changeChatState(chat, ChatState.WRITE_LOCATION);
-
-        } else {
-            Message response = ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("writeYearsOfExperienceState.congratulation.incorrect"), ParseMode.MARKDOWNV2);
-            chat.setBotMessageId(response.getMessageId());
-
-            onStart();
-        }
-    }
-
-    @Override
-    public void callbackQuery(String data) {
-
     }
 }

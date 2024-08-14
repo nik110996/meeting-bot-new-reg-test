@@ -65,7 +65,7 @@ public class SundayPartTwo implements DBConst {
                 case WRITE_PROFILE_LINK:
                 case WRITE_JOB:
                 case WRITE_HOBBIE:
-                case WRITE_AGE:
+                case WRITE_YEARS_OF_EXPERIENCE:
                     return true;
             }
 

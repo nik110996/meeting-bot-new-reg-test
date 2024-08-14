@@ -28,7 +28,7 @@ public class WriteHobbieState extends BaseChatState {
             userModel.setHobbie(message);
             userDAO.update(userModel);
 
-            ChatWork.changeChatState(chat, ChatState.WRITE_AGE);
+            ChatWork.changeChatState(chat, ChatState.WRITE_YEARS_OF_EXPERIENCE);
         } else {
             Message response = ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("writeHobbie.incorrect"), ParseMode.MARKDOWNV2);
             chat.setBotMessageId(response.getMessageId());

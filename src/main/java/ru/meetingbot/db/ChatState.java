@@ -32,7 +32,8 @@ public enum ChatState {
         WRITE_PROFILE_LINK(3, new WriteProfileLinkState()),
         WRITE_JOB(4, new WriteJobState()),
         WRITE_HOBBIE(5, new WriteHobbieState()),
-        WRITE_AGE(6, new WriteYearsOfExperienceState()),
+        WRITE_LOCATION(22, new WriteLocationState()),
+        WRITE_YEARS_OF_EXPERIENCE(6, new WriteYearsOfExperienceState()),
 
     MAIN(7, new MainState()),
         UPDATE_PROFILE(8, new UpdateProfileState()),
