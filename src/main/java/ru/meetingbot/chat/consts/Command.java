@@ -31,4 +31,6 @@ public interface Command {
         String C_UPDATE_AGE = "/update_age";
 
     String C_WHO_IS_MY_MEETING_WITH = "/who_is_my_match";
+
+    String TEST1 = "/test1";
 }

@@ -12,4 +12,4 @@ token=
 db.url=
 db.user=
 db.password=
-```# meeting-bot-new-reg-test
+```

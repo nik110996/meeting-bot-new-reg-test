@@ -20,8 +20,10 @@ import ru.meetingbot.util.StringMarkdownV2;
 import ru.meetingbot.util.UsersUtils;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Monday {
 
@@ -92,6 +94,7 @@ public class Monday {
 
         UserDAO userDAO = new UserDAO();
         MeetingDAO meetingDAO = new MeetingDAO();
+        FinalMeetingDAO finalMeetingDAO = new FinalMeetingDAO();
         List<MeetingModel> all = meetingDAO.getAll();
         List<MeetingModel> usersWithoutPairs = new ArrayList<>();
 
@@ -125,6 +128,18 @@ public class Monday {
                 /* если уже найдена пара за этот цикл */
                 if (userFromAll.getMeetingStateId() == MeetingState.M_HAVE_PARTNER.id()) {
                     continue;
+                }
+
+                // Если последняя встреча была менее двух месяцев назад, пропустить эту пару
+                Optional<FinalMeetingModel> lastMeeting = finalMeetingDAO.getLastMeetingBetweenUsers(withoutPairUserId, userId);
+                if (lastMeeting.isPresent()) {
+                    LocalDate lastMeetingDate = lastMeeting.get().getDate();
+                    LocalDate currentDate = LocalDate.now();
+
+                    long monthsBetween = ChronoUnit.MONTHS.between(lastMeetingDate, currentDate);
+                    if (monthsBetween < 2) {
+                        continue;
+                    }
                 }
 
                 /* И проверка, по алгоритму */

@@ -73,7 +73,7 @@ public abstract class Dao<T> implements DBConst {
      *  String название_столбца, Object значение,
      *  String название_столбца, Object значение, ...
      */
-    protected ResultSet executeQuery(String sql, Object... objects) {
+    public ResultSet executeQuery(String sql, Object... objects) {
         try (Connection connection = ConnectionFactory.getConnection()) {
 
             PreparedStatement prStmt = connection.prepareStatement(sql);

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class FinalMeetingDAO extends Dao<FinalMeetingModel> {
 
@@ -132,6 +133,29 @@ public class FinalMeetingDAO extends Dao<FinalMeetingModel> {
         } else {
             return deleteOr(T_FINAL_MEETING, objects);
         }
+    }
+
+    public Optional<FinalMeetingModel> getLastMeetingBetweenUsers(long userId1, long userId2) {
+        String sql = "SELECT * FROM " + T_FINAL_MEETING + " WHERE " +
+                "((" + T_FINAL_MEETING_C_USER_ID + " = ? AND " + T_FINAL_MEETING_C_USER_MEETING_ID + " = ?) OR " +
+                "(" + T_FINAL_MEETING_C_USER_ID + " = ? AND " + T_FINAL_MEETING_C_USER_MEETING_ID + " = ?)) " +
+                "AND " + T_FINAL_MEETING_C_FINAL_MEETING_STATE_ID + " BETWEEN 3 AND 6 " +
+                "ORDER BY " + T_FINAL_MEETING_C_DATE_MEETING + " DESC LIMIT 1";
+
+        try (ResultSet resultSet = executeQuery(sql,
+                T_FINAL_MEETING_C_USER_ID, userId1,
+                T_FINAL_MEETING_C_USER_MEETING_ID, userId2,
+                T_FINAL_MEETING_C_USER_ID, userId2,
+                T_FINAL_MEETING_C_USER_MEETING_ID, userId1)) {
+
+            if (resultSet.next()) {
+                return getOptionalFinalMeetingModelFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            //logger.log(Level.WARNING, "SQL Exception in getLastMeetingBetweenUsers", e);
+        }
+
+        return Optional.empty();
     }
 
 }
