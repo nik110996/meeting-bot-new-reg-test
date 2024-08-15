@@ -22,13 +22,22 @@ public class WriteLocationState extends BaseChatState {
 
     @Override
     public void writeMessage(String message) {
-        UserDAO userDAO = new UserDAO();
-        UserModel userModel = userDAO.get(chat.getUserId()).get();
+        if (message.length() < 128) {
+            UserDAO userDAO = new UserDAO();
+            UserModel userModel = userDAO.get(chat.getUserId()).get();
 
-        userDAO.update(userModel);
+            userModel.setLocation(message);
+            userDAO.update(userModel);
 
-        congratulation(userModel);
-        ChatWork.changeChatState(chat, ChatState.MAIN);
+            congratulation(userModel);
+            ChatWork.changeChatState(chat, ChatState.MAIN);
+        } else {
+            Message response = ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("writeLocation.incorrect"), ParseMode.MARKDOWNV2);
+            chat.setBotMessageId(response.getMessageId());
+
+            onStart();
+        }
+
 
     }
 
@@ -49,7 +58,8 @@ public class WriteLocationState extends BaseChatState {
         String instagram = "[" + profileLink + "]" + "(https://www.instagram.com/" + profileLink + "/)";
         String job = StringMarkdownV2.getString(userModel.getJob());
         String hobbie = StringMarkdownV2.getString(userModel.getHobbie());
-        Short age = userModel.getYearsOfExperience();
+        Short yearsOfExperience = userModel.getYearsOfExperience();
+        String location = userModel.getLocation();
 
         String separator = ResBundle.getMessage("writeYearsOfExperienceState.congratulation.separator");
         String text = new StringBuilder()
@@ -59,8 +69,8 @@ public class WriteLocationState extends BaseChatState {
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.job")).append(separator).append(job).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
-                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.location")).append(separator).append(hobbie).append("\n")
-                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.yearsOfExperienceState.congratulation")).append(separator).append(age).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.yearsOfExperienceState.congratulation")).append(separator).append(yearsOfExperience).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.location")).append(separator).append(location).append("\n")
                 .append(congratulationTwo).toString();
 
         Message response = ChatWork.sendMessage(chat.getUserId(), text, ParseMode.MARKDOWNV2);

@@ -23,8 +23,9 @@ public class UserDAO extends Dao<UserModel> {
             String job = resultSet.getString(T_USER_C_JOB);
             String hobbie = resultSet.getString(T_USER_C_HOBBIE);
             short yearsOfExperience = resultSet.getShort(T_USER_C_YEARS_OF_EXPERIENCE);
+            String location = resultSet.getString(T_USER_C_YEARS_OF_LOCATION);
 
-            UserModel userModel = new UserModel(id_user, userName, fullName, profileLink, job, hobbie, yearsOfExperience);
+            UserModel userModel = new UserModel(id_user, userName, fullName, profileLink, job, hobbie, yearsOfExperience, location);
             return Optional.of(userModel);
     }
 
@@ -108,7 +109,8 @@ public class UserDAO extends Dao<UserModel> {
                     T_USER_C_PROFILE_LINK, userModel.getProfileLink(),
                     T_USER_C_JOB, userModel.getJob(),
                     T_USER_C_HOBBIE, userModel.getHobbie(),
-                    T_USER_C_YEARS_OF_EXPERIENCE, userModel.getYearsOfExperience());
+                    T_USER_C_YEARS_OF_EXPERIENCE, userModel.getYearsOfExperience(),
+                    T_USER_C_YEARS_OF_LOCATION, userModel.getLocation());
 
             if (affectedRows > 0) {
                 affectedRows = create(connection, T_CHAT,
@@ -143,7 +145,8 @@ public class UserDAO extends Dao<UserModel> {
                 T_USER_C_JOB, userModel.getJob(),
                 T_USER_C_HOBBIE, userModel.getHobbie(),
                 T_USER_C_YEARS_OF_EXPERIENCE, userModel.getYearsOfExperience(),
-                T_USER_C_ID, userModel.getId());
+                T_USER_C_ID, userModel.getId(),
+                T_USER_C_YEARS_OF_LOCATION, userModel.getLocation());
     }
 
     @Override
