@@ -32,5 +32,6 @@ public interface Command {
 
     String C_WHO_IS_MY_MEETING_WITH = "/who_is_my_match";
 
-    String TEST1 = "/test1";
+    String C_PREVIOUS_MATCHES = "/previous_matches";
+    String C_HOW_TO_UNSUBSCRIBE = "/how_to_unsubscribe";
 }

@@ -1,16 +1,19 @@
 package ru.meetingbot.chat.state.main;
 
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.meetingbot.ResBundle;
 import ru.meetingbot.db.ChatState;
 import ru.meetingbot.chat.state.BaseChatState;
 import ru.meetingbot.chat.ChatWork;
+import ru.meetingbot.db.dao.FinalMeetingDAO;
 import ru.meetingbot.db.dao.MeetingDAO;
 import ru.meetingbot.db.dao.UserDAO;
+import ru.meetingbot.db.model.FinalMeetingModel;
 import ru.meetingbot.db.model.MeetingModel;
+import ru.meetingbot.db.model.UserModel;
 import ru.meetingbot.util.StringMarkdownV2;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,8 +39,28 @@ public class MainState extends BaseChatState {
         } else {
             response = ResBundle.getMessage("mainState.dontHaveMeeting");
         }
-
+        System.out.println(response);
         ChatWork.sendMessage(chat.getUserId(), response, ParseMode.MARKDOWNV2);
+    }
+
+    private void whatAreMyPreviousMatches(long userId) {
+        StringBuilder response = new StringBuilder();
+        List<Optional<FinalMeetingModel>> list = new FinalMeetingDAO().getMyPreviousMatches(userId);
+
+        list.forEach(meetingModelOptional -> meetingModelOptional.ifPresent(meetingModel -> {
+            long partnerId = (meetingModel.getUserId() == userId) ? meetingModel.getFinalMeetingStateId() : meetingModel.getUserId();
+            Optional<UserModel> partnerModel = new UserDAO().get(partnerId);
+
+            partnerModel.ifPresent(userModel ->
+                    response.append(userModel.getUserName())
+                            .append(" ")
+                            .append(meetingModel.getDate().toString())
+                            .append("\n")
+            );
+        }));
+
+        String answer = StringMarkdownV2.getString(response.toString());
+        ChatWork.sendMessage(userId, answer, ParseMode.MARKDOWNV2);
     }
 
     @Override
@@ -54,6 +77,8 @@ public class MainState extends BaseChatState {
             case C_HELP -> {
                 ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("mainState.help"), ParseMode.MARKDOWNV2);
             }
+            case C_PREVIOUS_MATCHES -> whatAreMyPreviousMatches(chat.getUserId());
+            case C_HOW_TO_UNSUBSCRIBE -> ChatWork.sendMessage(chat.getUserId(), ResBundle.getMessage("mainState.unsubscribe"), ParseMode.MARKDOWNV2);
             default -> {}
         }
     }

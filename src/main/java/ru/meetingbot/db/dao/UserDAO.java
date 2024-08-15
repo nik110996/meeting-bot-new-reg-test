@@ -145,8 +145,8 @@ public class UserDAO extends Dao<UserModel> {
                 T_USER_C_JOB, userModel.getJob(),
                 T_USER_C_HOBBIE, userModel.getHobbie(),
                 T_USER_C_YEARS_OF_EXPERIENCE, userModel.getYearsOfExperience(),
-                T_USER_C_ID, userModel.getId(),
-                T_USER_C_YEARS_OF_LOCATION, userModel.getLocation());
+                T_USER_C_YEARS_OF_LOCATION, userModel.getLocation(),
+                T_USER_C_ID, userModel.getId());
     }
 
     @Override

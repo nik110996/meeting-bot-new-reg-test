@@ -158,4 +158,26 @@ public class FinalMeetingDAO extends Dao<FinalMeetingModel> {
         return Optional.empty();
     }
 
+    public List<Optional<FinalMeetingModel>> getMyPreviousMatches(long userId) {
+        String sql = "SELECT * FROM " + T_FINAL_MEETING + " WHERE " + T_FINAL_MEETING_C_USER_ID + " = ?  " +
+                "OR " + T_FINAL_MEETING_C_USER_MEETING_ID + " = ? " +
+                "AND " + T_FINAL_MEETING_C_FINAL_MEETING_STATE_ID + " BETWEEN 3 AND 6 " +
+                "ORDER BY " + T_FINAL_MEETING_C_DATE_MEETING + " DESC";
+
+        List<Optional<FinalMeetingModel>> list = new ArrayList<>();
+
+        try (ResultSet resultSet = executeQuery(sql,
+                T_FINAL_MEETING_C_USER_ID, userId,
+                T_FINAL_MEETING_C_USER_MEETING_ID, userId)) {
+            while (resultSet.next()) {
+                Optional<FinalMeetingModel> optional = getOptionalFinalMeetingModelFromResultSet(resultSet);
+
+                list.add(optional);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
 }
