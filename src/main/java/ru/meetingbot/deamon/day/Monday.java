@@ -31,7 +31,6 @@ public class Monday {
         String userName = StringMarkdownV2.getString(userModel.getUserName());
         String fullName = StringMarkdownV2.getString(userModel.getFullName());
         String profileLink = StringMarkdownV2.getString(userModel.getProfileLink());
-        String instagram = "[" + profileLink + "]" + "(https://www.instagram.com/" + profileLink + "/)";
         String job = StringMarkdownV2.getString(userModel.getJob());
         String hobbie = StringMarkdownV2.getString(userModel.getHobbie());
         Short age = userModel.getYearsOfExperience();
@@ -42,7 +41,7 @@ public class Monday {
         String text = new StringBuilder()
                 .append(ResBundle.getMessage("monday.beforeUsername")).append(userName).append(ResBundle.getMessage("monday.afterUsername"))
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.name")).append(separator).append(fullName).append("\n")
-                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(profileLink).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.job")).append(separator).append(job).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
                 .append(ResBundle.getMessage("writeAgeState.congratulation.age")).append(separator).append(age).append("\n")
