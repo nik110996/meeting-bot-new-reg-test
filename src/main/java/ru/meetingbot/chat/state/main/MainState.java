@@ -13,6 +13,7 @@ import ru.meetingbot.db.model.MeetingModel;
 import ru.meetingbot.db.model.UserModel;
 import ru.meetingbot.util.StringMarkdownV2;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,18 +47,40 @@ public class MainState extends BaseChatState {
     private void whatAreMyPreviousMatches(long userId) {
         StringBuilder response = new StringBuilder();
         List<Optional<FinalMeetingModel>> list = new FinalMeetingDAO().getMyPreviousMatches(userId);
+        long partnerId = 0;
+        long oldPartnerId = 0;
+        LocalDate oldDate = null;
 
-        list.forEach(meetingModelOptional -> meetingModelOptional.ifPresent(meetingModel -> {
-            long partnerId = (meetingModel.getUserId() == userId) ? meetingModel.getFinalMeetingStateId() : meetingModel.getUserId();
-            Optional<UserModel> partnerModel = new UserDAO().get(partnerId);
+        for (Optional<FinalMeetingModel> meetingModelOptional : list) {
+            if (meetingModelOptional.isPresent()) {
+                FinalMeetingModel meetingModel = meetingModelOptional.get();
 
-            partnerModel.ifPresent(userModel ->
+
+                if (meetingModel.getUserId() == userId) {
+                    partnerId = meetingModel.getUserMeetingId();
+                }
+
+                if (meetingModel.getUserMeetingId() == userId) {
+                    partnerId = meetingModel.getUserId();
+                }
+
+                if (partnerId == oldPartnerId && meetingModel.getDate().equals(oldDate)) {
+                    continue;
+                }
+
+                oldPartnerId = partnerId;
+                oldDate = meetingModel.getDate();
+                Optional<UserModel> partnerModel = new UserDAO().get(partnerId);
+
+                if (partnerModel.isPresent()) {
+                    UserModel userModel = partnerModel.get();
                     response.append(userModel.getUserName())
                             .append(" ")
                             .append(meetingModel.getDate().toString())
-                            .append("\n")
-            );
-        }));
+                            .append("\n");
+                }
+            }
+        }
 
         String answer = StringMarkdownV2.getString(response.toString());
         ChatWork.sendMessage(userId, answer, ParseMode.MARKDOWNV2);

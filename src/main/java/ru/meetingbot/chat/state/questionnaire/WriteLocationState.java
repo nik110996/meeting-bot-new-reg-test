@@ -22,7 +22,7 @@ public class WriteLocationState extends BaseChatState {
 
     @Override
     public void writeMessage(String message) {
-        if (message.length() < 128) {
+        if (message.length() < 250) {
             UserDAO userDAO = new UserDAO();
             UserModel userModel = userDAO.get(chat.getUserId()).get();
 
