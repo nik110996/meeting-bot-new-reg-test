@@ -33,7 +33,7 @@ public class Monday {
         String profileLink = StringMarkdownV2.getString(userModel.getProfileLink());
         String job = StringMarkdownV2.getString(userModel.getJob());
         String hobbie = StringMarkdownV2.getString(userModel.getHobbie());
-        Short age = userModel.getYearsOfExperience();
+        Short years = userModel.getYearsOfExperience();
 
         String reachOut = "__[Telegram]" + "(https://t.me/" + userName + ")__";
 
@@ -44,7 +44,7 @@ public class Monday {
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(profileLink).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.job")).append(separator).append(job).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
-                .append(ResBundle.getMessage("writeAgeState.congratulation.age")).append(separator).append(age).append("\n")
+                .append(ResBundle.getMessage("writeAgeState.congratulation.years")).append(separator).append(years).append("\n")
                 .append(ResBundle.getMessage("monday.beforeReachOut")).append(reachOut).append(ResBundle.getMessage("monday.afterReachOut"))
 
                 .toString();
