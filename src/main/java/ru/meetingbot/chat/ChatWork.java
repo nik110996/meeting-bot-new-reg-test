@@ -67,7 +67,6 @@ public class ChatWork {
      * Смена состояний
      */
     public static void changeChatState(long userId, ChatState state) {
-        System.out.println(new ChatDAO().get(userId));
         ChatWithState chat = new ChatDAO().get(userId).get();
         changeChatState(chat, state);
     }

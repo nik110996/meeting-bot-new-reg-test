@@ -40,7 +40,7 @@ public class MainState extends BaseChatState {
         } else {
             response = ResBundle.getMessage("mainState.dontHaveMeeting");
         }
-        System.out.println(response);
+
         ChatWork.sendMessage(chat.getUserId(), response, ParseMode.MARKDOWNV2);
     }
 

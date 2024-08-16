@@ -33,7 +33,7 @@ public class UpdateProfileState extends BaseChatState {
         String profileLink = /*isEmptyProfileLink ? U_YELLOW_CIRCLE + " Social Network" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.profileLink") + separator + userModel.getProfileLink();
         String job = /*isEmptyJob ? U_YELLOW_CIRCLE + " Job" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.job") + separator + userModel.getJob();
         String hobbie = /*isEmptyHobbie ? U_YELLOW_CIRCLE + " Hobbie" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.hobbie") + separator + userModel.getHobbie();
-        String age = /*isEmptyAge ? U_YELLOW_CIRCLE + " Age" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.yearsOfExperience") + separator + userModel.getYearsOfExperience();
+        String age = /*isEmptyAge ? U_YELLOW_CIRCLE + " YearsOfExperience" : U_GREEN_CIRCLE + */ResBundle.getMessage("updateProfileState.yearsOfExperience") + separator + userModel.getYearsOfExperience();
 
         var fullNameButton = ChatWork.getButton(fullName, C_UPDATE_FULL_NAME);
         var profileLinkButton = ChatWork.getButton(profileLink, C_UPDATE_PROFILE_LINK);
