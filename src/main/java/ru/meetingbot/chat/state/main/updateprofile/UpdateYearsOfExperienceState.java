@@ -9,7 +9,7 @@ import ru.meetingbot.db.ChatState;
 import ru.meetingbot.db.dao.UserDAO;
 import ru.meetingbot.db.model.UserModel;
 
-public class UpdateAgeState extends BaseChatState {
+public class UpdateYearsOfExperienceState extends BaseChatState {
 
     @Override
     public void onStart() {
@@ -21,19 +21,19 @@ public class UpdateAgeState extends BaseChatState {
 
     @Override
     public void writeMessage(String message) {
-        short age = 0;
+        short years = 0;
 
         try {
-            age = Short.parseShort(message);
+            years = Short.parseShort(message);
         } catch (NumberFormatException e) {
-            age = -1;
+            years = -1;
         }
 
-        if (age > 0 && age < 200) {
+        if (years > 0 && years < 200) {
             UserDAO userDAO = new UserDAO();
             UserModel userModel = userDAO.get(chat.getUserId()).get();
 
-            userModel.setYearsOfExperience(age);
+            userModel.setYearsOfExperience(years);
             userDAO.update(userModel);
 
             ChatWork.changeChatState(chat, ChatState.UPDATE_PROFILE);

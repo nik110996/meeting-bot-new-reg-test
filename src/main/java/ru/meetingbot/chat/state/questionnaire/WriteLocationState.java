@@ -55,7 +55,6 @@ public class WriteLocationState extends BaseChatState {
         String username = StringMarkdownV2.getString(userModel.getUserName());
         String fullName = StringMarkdownV2.getString(userModel.getFullName());
         String profileLink = StringMarkdownV2.getString(userModel.getProfileLink());
-        String instagram = "[" + profileLink + "]" + "(https://www.instagram.com/" + profileLink + "/)";
         String job = StringMarkdownV2.getString(userModel.getJob());
         String hobbie = StringMarkdownV2.getString(userModel.getHobbie());
         Short yearsOfExperience = userModel.getYearsOfExperience();
@@ -66,7 +65,7 @@ public class WriteLocationState extends BaseChatState {
                 .append(beforeUsername).append(username).append(afterUsername)
                 .append(congratulation)
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.name")).append(separator).append(fullName).append("\n")
-                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(instagram).append("\n")
+                .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.profileLink")).append(separator).append(profileLink).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.job")).append(separator).append(job).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.hobbie")).append(separator).append(hobbie).append("\n")
                 .append(ResBundle.getMessage("writeYearsOfExperienceState.congratulation.yearsOfExperienceState.congratulation")).append(separator).append(yearsOfExperience).append("\n")

@@ -10,6 +10,9 @@ import ru.meetingbot.db.dao.UserDAO;
 import ru.meetingbot.db.model.UserModel;
 import ru.meetingbot.util.StringMarkdownV2;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UpdateProfileLinkState extends BaseChatState {
 
     @Override
@@ -25,7 +28,7 @@ public class UpdateProfileLinkState extends BaseChatState {
 
     @Override
     public void writeMessage(String message) {
-        if (message.length() < 250 && !message.startsWith("@")) {
+        if (message.length() < 250 && isLinkedInLink(message)) {
             UserDAO userDAO = new UserDAO();
             UserModel userModel = userDAO.get(chat.getUserId()).get();
 
@@ -44,5 +47,13 @@ public class UpdateProfileLinkState extends BaseChatState {
     @Override
     public void callbackQuery(String data) {
 
+    }
+
+    public boolean isLinkedInLink(String input) {
+        // Регулярное выражение для проверки ссылки на LinkedIn
+        String linkedinRegex = "^(https?://)?(www\\.)?linkedin\\.com/.*$";
+        Pattern pattern = Pattern.compile(linkedinRegex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
     }
 }

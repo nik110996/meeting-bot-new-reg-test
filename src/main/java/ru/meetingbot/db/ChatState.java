@@ -41,7 +41,7 @@ public enum ChatState {
             UPDATE_PROFILE_LINK(10, new UpdateProfileLinkState()),
             UPDATE_JOB(11, new UpdateJobState()),
             UPDATE_HOBBIE(12, new UpdateHobbieState()),
-            UPDATE_AGE(13, new UpdateAgeState()),
+            UPDATE_AGE(13, new UpdateYearsOfExperienceState()),
 
     S_TWO_WHO_NOT_HAVE_PARTNER(14, new SundayPartTwoWhoNotHavePartnerState()),
     S_TWO_WHO_OTHER(15, new SundayPartTwoWhoOtherState()),

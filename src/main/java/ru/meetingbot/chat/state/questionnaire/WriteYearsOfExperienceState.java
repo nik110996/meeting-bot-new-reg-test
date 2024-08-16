@@ -8,7 +8,6 @@ import ru.meetingbot.chat.state.BaseChatState;
 import ru.meetingbot.db.ChatState;
 import ru.meetingbot.db.dao.UserDAO;
 import ru.meetingbot.db.model.UserModel;
-import ru.meetingbot.util.StringMarkdownV2;
 
 public class WriteYearsOfExperienceState extends BaseChatState {
 
@@ -57,19 +56,19 @@ public class WriteYearsOfExperienceState extends BaseChatState {
 
     @Override
     public void writeMessage(String message) {
-        short age = 0;
+        short years = 0;
 
         try {
-            age = Short.parseShort(message);
+            years = Short.parseShort(message);
         } catch (NumberFormatException e) {
-            age = -1;
+            years = -1;
         }
 
-        if (age > 0 && age < 200) {
+        if (years > 0 && years < 200) {
             UserDAO userDAO = new UserDAO();
             UserModel userModel = userDAO.get(chat.getUserId()).get();
 
-            userModel.setYearsOfExperience(age);
+            userModel.setYearsOfExperience(years);
             userDAO.update(userModel);
 
             //congratulation(userModel);
